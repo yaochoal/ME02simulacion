@@ -220,8 +220,12 @@ finally:
 
 ### Herramientas utilizadas en el desarrollo: 
 
-#### NS3:
+#### NS3: 
+
+Este es un <<framework>> el cual está dedicado exclusivamente a la aplicación de técnicas de inteligencia artificial, cuyo objetivo es estandarizar las rutinas aplicadas por la comunidad con esto se pueden replicar experimentos y acelerar los avances en el campo de la inteligencia artificial.
 
 #### OpenAI Gym:
+
+Este software se encarga principalmente de simular redes de computadores, cuya extensión aplica principalmente al estudio de redes móviles ad-hoc al permitir la implementación de protocolos de redes cableadas y de redes inalámbricas.
 
 ## 3. Resultados.
