@@ -3,7 +3,7 @@
 
 ## Propósito
 
-Genere una Red Ad hoc de mínimo 20 nodos, con diferentes tipos de tráfico y servicios, se debe utilizar la herramienta OpenAI Gym 
+Generar una Red Ad hoc de mínimo 20 nodos, con diferentes tipos de tráfico y servicios, se debe utilizar la herramienta OpenAI Gym 
 definiendo dos métricas de aprendizaje para la simulación creada.
 
 ## Integrantes
