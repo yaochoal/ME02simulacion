@@ -127,7 +127,7 @@ if __name__ == '__main__':
     import sys
     main(sys.argv)
 ```
-
+### 1.1 Descripción del codigo: 
 ``` fichero: ./simple_test.py```
 ```
 #!/usr/bin/env python3
@@ -171,6 +171,9 @@ finally:
     env.close()
     print("Done")
 ```
+
+### 1.2 Descripción del codigo: 
+
 ### 2. Manual técnico:
 
 ### Requerimientos: 
