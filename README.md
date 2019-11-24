@@ -178,7 +178,9 @@ finally:
 
 ### Requerimientos: 
 
-NS3 y OpenAI Gym
+- Ubuntu 16.04
+- NS3
+- OpenAI Gym
 
 ### Herramientas utilizadas en el desarrollo: 
 
