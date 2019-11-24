@@ -34,7 +34,7 @@ using namespace ns3;
 //
 // Definir palabra clave de registro para este archivo
 //
-NS_LOG_COMPONENT_DEFINE ("RedAddHoc");
+NS_LOG_COMPONENT_DEFINE ("RedAdHoc");
 
 
 static void
@@ -51,7 +51,7 @@ main (int argc, char *argv[])
   // Primero, inicializamos algunas variables locales que controlan algunos
   // parametros de la simulacion.
   //
-  uint32_t backboneNodes = 10;
+  uint32_t backboneNodes = 25;
   uint32_t infraNodes = 1;
   uint32_t lanNodes = 1;
   uint32_t stopTime = 20;
@@ -152,7 +152,6 @@ main (int argc, char *argv[])
   Simulator::Run ();
   Simulator::Destroy ();
 }
-
 ```
 ### 1.1 Descripción del codigo: 
 
