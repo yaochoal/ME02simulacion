@@ -174,11 +174,11 @@ finally:
 
 ### 1.2 Descripción del codigo: 
 
-    Para comprender la simulación como un todo, primero se debe explicar cómo funciona la red ad-hoc a tratar, esta se compone de una serie de rutinas que descomponen la funcionalidad en dos submodelos, uno de comunicación y el otro de movilidad de los nodos o terminales que intercambian información, los cuales siguen una parametrización en cantidad de nodos a trabajar, tamaño, tipo y tasa de transmisión de paquetes. 
+Para comprender la simulación como un todo, primero se debe explicar cómo funciona la red ad-hoc a tratar, esta se compone de una serie de rutinas que descomponen la funcionalidad en dos submodelos, uno de comunicación y el otro de movilidad de los nodos o terminales que intercambian información, los cuales siguen una parametrización en cantidad de nodos a trabajar, tamaño, tipo y tasa de transmisión de paquetes. 
 
-    Para definir el submodelo de comunicación se genera un espacio que delimita los nodos, luego crea la cantidad de nodos parametrizados, a estos nodos se le impone el uso de red wifi y se otorgan características a cada uno de los nodos tales como dirección MAC, tipo de red y canal a usar. Más tarde, se implementa el protocolo de internet (IPv4) en cada dispositivo, y finalmente se le asigna una dirección IPv4. Como toda red ad-hoc requiere un componente de movilidad, se integra un submodelo que lo contemple, en este caso, se aplica un modelo de movilidad en 2D delimitando una región frontera; y asignando variables de velocidad, posición (en el eje X y Y) en cada uno de los nodos con el fin de observar recorridos. 
+Para definir el submodelo de comunicación se genera un espacio que delimita los nodos, luego crea la cantidad de nodos parametrizados, a estos nodos se le impone el uso de red wifi y se otorgan características a cada uno de los nodos tales como dirección MAC, tipo de red y canal a usar. Más tarde, se implementa el protocolo de internet (IPv4) en cada dispositivo, y finalmente se le asigna una dirección IPv4. Como toda red ad-hoc requiere un componente de movilidad, se integra un submodelo que lo contemple, en este caso, se aplica un modelo de movilidad en 2D delimitando una región frontera; y asignando variables de velocidad, posición (en el eje X y Y) en cada uno de los nodos con el fin de observar recorridos. 
 
-    Finalmente, al tener los dos submodelos que satisfacen el estudio de una red ad-hoc, se corre la simulación y se despliega en un componente de visualización.
+Finalmente, al tener los dos submodelos que satisfacen el estudio de una red ad-hoc, se corre la simulación y se despliega en un componente de visualización.
 
 
 ### 2. Manual técnico:
