@@ -186,4 +186,4 @@ NS3 y OpenAI Gym
 
 #### OpenAI Gym:
 
-## 3. Análisis de resultados.
+## 3. Resultados.
