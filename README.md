@@ -18,7 +18,7 @@ definiendo dos métricas de aprendizaje para la simulación creada.
 ### 1. Código fuente del simulador construido:
 
 
-``` ejemplo: ./red-ad-hoc.py```
+``` fichero: ./red-ad-hoc.py```
 ```
 import ns.applications
 import ns.core
