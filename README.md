@@ -160,6 +160,7 @@ Para comprender la simulación como un todo, primero se debe explicar cómo func
 Para definir el submodelo de comunicación se genera un espacio que delimita los nodos, luego crea la cantidad de nodos parametrizados, a estos nodos se le impone el uso de red wifi y se otorgan características a cada uno de los nodos tales como dirección MAC, tipo de red y canal a usar. Más tarde, se implementa el protocolo de internet (IPv4) en cada dispositivo, y finalmente se le asigna una dirección IPv4. Como toda red ad-hoc requiere un componente de movilidad, se integra un submodelo que lo contemple, en este caso, se aplica un modelo de movilidad en 2D delimitando una región frontera; y asignando variables de velocidad y posición (en el eje X y Y) en cada uno de los nodos con el fin de observar recorridos. 
 
 Finalmente, al tener los dos submodelos que satisfacen el estudio de una red ad-hoc, se corre la simulación y se despliega en un componente de visualización.
+
 ### 1.3 Código fuente del simulador 2 red ad-hoc con OpenAI Gym:
 
 ``` fichero: ./sim.cc```
@@ -415,9 +416,11 @@ main (int argc, char *argv[])
 ```
 ### 1.4 Descripción del codigo: 
 
+El kit de desarrollo ns3-gym consiste en dos módulos (una escrita en C++ y otra en Python) siendo complementos a los entornos de desarrollo ns-3 y OpenAI Gym que permiten el intercambio de información entre estos. La comunicación se realiza sobre sockets ZMQ1 usando la librería Protocol Buffers2 para la serialización de mensajes. Sin embargo, esto se oculta de otros usuarios dentro de una API fácil de usar. Los ambientes de simulación son definidos usando únicamente standardns-3models, mientras que los agentes pueden ser desarrollados usando librerias de machine learning como Tensorflow, Keras, entre otros.
+
 La técnica de aprendizaje por refuerzo de define de la siguiente manera, un agente toma decisiones en un ambiente dado de forma discreta o continua, de tal manera que se induce a maximizar una noción de recompensa asociada a los estímulos y las decisiones tomadas.
 
-Ahora, para poder comprender la inserción de IA a través de la herramienta OpenAI Gym se debe descomponer la técnica de aprendizaje por refuerzo en un modelo de tres componentes; el primero, es un componente de observación al cual se le integra el objeto de estudio, en este caso la red ad-hoc incluyendo la parametrización impuesta anteriormente con el fin de poder interactuar con los dos siguientes componentes del modelo de la técnica ApR, luego se define el sistema de recompensas, el cual de forma iterativa asigna valores numéricos de un límite inferior a un límite superior, y se da por satisfecho al llegar al límite superior de este sistema; y el método de cierre o conclusión de la simulación cuando expira el tiempo de ejecución o se llega al límite superior del sistema de recompensas.
+Ahora, para poder comprender la inserción de inteligencia artificial a través de la herramienta OpenAI Gym se debe descomponer la técnica de aprendizaje por refuerzo en un modelo de tres componentes; el primero, es un componente de observación al cual se le integra el objeto de estudio, en este caso la red ad-hoc incluyendo la parametrización impuesta anteriormente con el fin de poder interactuar con los dos siguientes componentes del modelo de la técnica de aprendizaje por refuerzo; luego, se define el sistema de recompensas, el cual de forma iterativa asigna valores numéricos de un límite inferior a un límite superior, y se da por satisfecho al llegar al límite superior u óptimo de este sistema; y el método de cierre o conclusión de la simulación se activa cuando expira el tiempo de ejecución o se llega al límite superior del sistema de recompensas.
 
 
 ### 1.5 Código fuente del simulador 2 red ad-hoc con OpenAI Gym para iniciar simulaciòn:
