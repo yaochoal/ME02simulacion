@@ -489,10 +489,13 @@ Este es un framework el cual está dedicado exclusivamente a la aplicación de t
 Este software se encarga principalmente de simular redes de computadores, cuya extensión aplica principalmente al estudio de redes móviles ad-hoc al permitir la implementación de protocolos de redes cableadas y de redes inalámbricas.
 
 ## 3. Resultados.
-
-
+![NS1](/img/ns1.jpg)
+![NS2](/img/ns2.jpg)
+![NS3](/img/ns3.jpg)
+![NS4](/img/ns4.jpg)
+![NS5](/img/ns5.jpg)
+![NS6](/img/ns6.jpg)
 ## 4. Infografía.
-
-https://towardsdatascience.com/reinforcement-learning-with-openai-d445c2c687d2
-
-https://arxiv.org/pdf/1810.03943.pdf
+- [Introduction: Reinforcement Learning with OpenAI Gym](https://towardsdatascience.com/reinforcement-learning-with-openai-d445c2c687d2) 
+- [ns3-gym: Extending OpenAI Gym for Networking Research](https://arxiv.org/pdf/1810.03943.pdf)
+- [ns-3 meets OpenAI Gym: The Playground for Machine Learning in Networking Research](http://www.tkn.tu-berlin.de/fileadmin/fg112/Papers/2019/gawlowicz19_mswim.pdf)
