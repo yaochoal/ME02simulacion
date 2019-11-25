@@ -415,6 +415,11 @@ main (int argc, char *argv[])
 ```
 ### 1.4 Descripción del codigo: 
 
+La técnica de aprendizaje por refuerzo de define de la siguiente manera, un agente toma decisiones en un ambiente dado de forma discreta o continua, de tal manera que se induce a maximizar una noción de recompensa asociada a los estímulos y las decisiones tomadas.
+
+Ahora, para poder comprender la inserción de IA a través de la herramienta OpenAI Gym se debe descomponer la técnica de aprendizaje por refuerzo en un modelo de tres componentes; el primero, es un componente de observación al cual se le integra el objeto de estudio, en este caso la red ad-hoc incluyendo la parametrización impuesta anteriormente con el fin de poder interactuar con los dos siguientes componentes del modelo de la técnica ApR, luego se define el sistema de recompensas, el cual de forma iterativa asigna valores numéricos de un límite inferior a un límite superior, y se da por satisfecho al llegar al límite superior de este sistema; y el método de cierre o conclusión de la simulación cuando expira el tiempo de ejecución o se llega al límite superior del sistema de recompensas.
+
+
 ### 1.5 Código fuente del simulador 2 red ad-hoc con OpenAI Gym para iniciar simulaciòn:
 
 ``` fichero: ./simple_test.py```
@@ -481,3 +486,10 @@ Este es un framework el cual está dedicado exclusivamente a la aplicación de t
 Este software se encarga principalmente de simular redes de computadores, cuya extensión aplica principalmente al estudio de redes móviles ad-hoc al permitir la implementación de protocolos de redes cableadas y de redes inalámbricas.
 
 ## 3. Resultados.
+
+
+## 4. Infografía.
+
+https://towardsdatascience.com/reinforcement-learning-with-openai-d445c2c687d2
+
+https://arxiv.org/pdf/1810.03943.pdf
