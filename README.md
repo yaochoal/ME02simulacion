@@ -161,7 +161,7 @@ Para definir el submodelo de comunicación se genera un espacio que delimita los
 
 Finalmente, al tener los dos submodelos que satisfacen el estudio de una red ad-hoc, se corre la simulación y se despliega en un componente de visualización.
 
-### 1.3 Código fuente del simulador 2 red ad-hoc con OpenAI Gym:
+### 1.2 Código fuente del simulador 2 red ad-hoc con OpenAI Gym:
 
 ``` fichero: ./sim.cc```
 
@@ -414,7 +414,7 @@ main (int argc, char *argv[])
 
 
 ```
-### 1.4 Descripción del codigo: 
+### 1.3 Descripción del codigo: 
 
 El kit de desarrollo ns3-gym consiste en dos módulos (una escrita en C++ y otra en Python) siendo complementos a los entornos de desarrollo ns-3 y OpenAI Gym que permiten el intercambio de información entre estos. La comunicación se realiza sobre sockets ZMQ1 usando la librería Protocol Buffers2 para la serialización de mensajes. Sin embargo, esto se oculta de otros usuarios dentro de una API fácil de usar. Los ambientes de simulación son definidos usando únicamente standardns-3models, mientras que los agentes pueden ser desarrollados usando librerías de machine learning como Tensorflow, Keras, entre otros.
 
@@ -423,7 +423,7 @@ La técnica de aprendizaje por refuerzo de define de la siguiente manera, un age
 Ahora, para poder comprender la inserción de inteligencia artificial a través de la herramienta OpenAI Gym se debe descomponer la técnica de aprendizaje por refuerzo en un modelo de tres componentes; el primero, es un componente de observación al cual se le integra el objeto de estudio, en este caso la red ad-hoc incluyendo la parametrización impuesta anteriormente con el fin de poder interactuar con los dos siguientes componentes del modelo de la técnica de aprendizaje por refuerzo; luego, se define el sistema de recompensas, el cual de forma iterativa asigna valores numéricos de un límite inferior a un límite superior, y se da por satisfecho al llegar al límite superior u óptimo de este sistema; y el método de cierre o conclusión de la simulación se activa cuando expira el tiempo de ejecución o se llega al límite superior del sistema de recompensas.
 
 
-### 1.5 Código fuente del simulador 2 red ad-hoc con OpenAI Gym para iniciar simulaciòn:
+### 1.4 Código fuente del simulador 2 red ad-hoc con OpenAI Gym para iniciar simulaciòn:
 
 ``` fichero: ./simple_test.py```
 ```
@@ -478,6 +478,13 @@ finally:
 - NS3
 - OpenAI Gym
 
+Para correr el ejemplo simple de NS3 se hace con el siguiente comando con el archivo dentro de la carpeta scratch parados en la terminal desde la raiz de el programa de NS3
+
+```./waf --run scratch/red-ad-hoc --vis```
+
+Y para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en una carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./simple_test.py.
+
+```./simple_test.py```
 ### Herramientas utilizadas en el desarrollo: 
 
 #### NS3: 
