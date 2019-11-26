@@ -416,7 +416,7 @@ main (int argc, char *argv[])
 ```
 ### 1.4 Descripción del codigo: 
 
-El kit de desarrollo ns3-gym consiste en dos módulos (una escrita en C++ y otra en Python) siendo complementos a los entornos de desarrollo ns-3 y OpenAI Gym que permiten el intercambio de información entre estos. La comunicación se realiza sobre sockets ZMQ1 usando la librería Protocol Buffers2 para la serialización de mensajes. Sin embargo, esto se oculta de otros usuarios dentro de una API fácil de usar. Los ambientes de simulación son definidos usando únicamente standardns-3models, mientras que los agentes pueden ser desarrollados usando librerias de machine learning como Tensorflow, Keras, entre otros.
+El kit de desarrollo ns3-gym consiste en dos módulos (una escrita en C++ y otra en Python) siendo complementos a los entornos de desarrollo ns-3 y OpenAI Gym que permiten el intercambio de información entre estos. La comunicación se realiza sobre sockets ZMQ1 usando la librería Protocol Buffers2 para la serialización de mensajes. Sin embargo, esto se oculta de otros usuarios dentro de una API fácil de usar. Los ambientes de simulación son definidos usando únicamente standardns-3models, mientras que los agentes pueden ser desarrollados usando librerías de machine learning como Tensorflow, Keras, entre otros.
 
 La técnica de aprendizaje por refuerzo de define de la siguiente manera, un agente toma decisiones en un ambiente dado de forma discreta o continua, de tal manera que se induce a maximizar una noción de recompensa asociada a los estímulos y las decisiones tomadas.
 
@@ -489,13 +489,19 @@ Este es un framework el cual está dedicado exclusivamente a la aplicación de t
 Este software se encarga principalmente de simular redes de computadores, cuya extensión aplica principalmente al estudio de redes móviles ad-hoc al permitir la implementación de protocolos de redes cableadas y de redes inalámbricas.
 
 ## 3. Resultados.
+Inicialmente tenemos una red de 25 nodos conectados en una red Ad-Hoc
 ![NS1](/img/ns1.jpg)
+Una vez se inicia la simulación se empiezan a mandar datos 100kps cada 3 segundos entre los nodos más cercanos
 ![NS2](/img/ns2.jpg)
+Cada vez los nodos se van moviendo aleatoriamente y formándose grupos
 ![NS3](/img/ns3.jpg)
+Y progresivamente se siguen enviando datos y se forman grupos donde se envían datos hacia sus compañeros más cercanos
 ![NS4](/img/ns4.jpg)
+Hasta que unos nodos se aíslan completamente y otros se comunican solo con sus cercanos
 ![NS5](/img/ns5.jpg)
+Ya aplicado a OpenAI Gym la idea es variar los parámetros de movimiento de los nodos de la red Ad-Hoc de tal forma que el objetivo sea un movimiento que permita tener la red transmitiendo la mayor cantidad de datos entre los nodos donde se ve el escenario ideal y es que todos los nodos se vayan en una misma dirección transmitiendo la misma cantidad de datos entre todos los nodos de manera constante.
 ![NS6](/img/ns6.jpg)
-## 4. Infografía.
+## 4. Referencias.
 - [Introduction: Reinforcement Learning with OpenAI Gym](https://towardsdatascience.com/reinforcement-learning-with-openai-d445c2c687d2) 
 - [ns3-gym: Extending OpenAI Gym for Networking Research](https://arxiv.org/pdf/1810.03943.pdf)
 - [ns-3 meets OpenAI Gym: The Playground for Machine Learning in Networking Research](http://www.tkn.tu-berlin.de/fileadmin/fg112/Papers/2019/gawlowicz19_mswim.pdf)
