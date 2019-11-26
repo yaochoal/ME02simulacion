@@ -477,12 +477,12 @@ finally:
 - Ubuntu 19.10
 - NS3
 - OpenAI Gym
-
-Para correr el ejemplo simple de NS3 se hace con el siguiente comando con el archivo dentro de la carpeta scratch parados en la terminal desde la raiz de el programa de NS3
+### Escenario 1:
+1. Para correr el ejemplo simple de NS3 se hace con el siguiente comando con el archivo dentro de la carpeta scratch parados en la terminal desde la raiz de el programa de NS3
 
 ```./waf --run scratch/red-ad-hoc --vis```
-
-Y para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en una carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./simple_test.py.
+### Escenario 2:
+2. Y para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en una carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./simple_test.py.
 
 ```./simple_test.py```
 ### Herramientas utilizadas en el desarrollo: 
@@ -496,17 +496,17 @@ Este es un framework el cual está dedicado exclusivamente a la aplicación de t
 Este software se encarga principalmente de simular redes de computadores, cuya extensión aplica principalmente al estudio de redes móviles ad-hoc al permitir la implementación de protocolos de redes cableadas y de redes inalámbricas.
 
 ## 3. Resultados.
-Inicialmente tenemos una red de 25 nodos conectados en una red Ad-Hoc
+1. Inicialmente tenemos una red de 25 nodos conectados en una red Ad-Hoc
 ![NS1](/img/ns1.jpg)
-Una vez se inicia la simulación se empiezan a mandar datos 100kps cada 3 segundos entre los nodos más cercanos
+2. Una vez se inicia la simulación se empiezan a mandar datos 100kps cada 3 segundos entre los nodos más cercanos
 ![NS2](/img/ns2.jpg)
-Cada vez los nodos se van moviendo aleatoriamente y formándose grupos
+3. Cada vez los nodos se van moviendo aleatoriamente y formándose grupos
 ![NS3](/img/ns3.jpg)
-Y progresivamente se siguen enviando datos y se forman grupos donde se envían datos hacia sus compañeros más cercanos
+4. Y progresivamente se siguen enviando datos y se forman grupos donde se envían datos hacia sus compañeros más cercanos
 ![NS4](/img/ns4.jpg)
-Hasta que unos nodos se aíslan completamente y otros se comunican solo con sus cercanos
+5. Hasta que unos nodos se aíslan completamente y otros se comunican solo con sus cercanos
 ![NS5](/img/ns5.jpg)
-Ya aplicado a OpenAI Gym la idea es variar los parámetros de movimiento de los nodos de la red Ad-Hoc de tal forma que el objetivo sea un movimiento que permita tener la red transmitiendo la mayor cantidad de datos entre los nodos donde se ve el escenario ideal y es que todos los nodos se vayan en una misma dirección transmitiendo la misma cantidad de datos entre todos los nodos de manera constante.
+6. Ya aplicado a OpenAI Gym la idea es variar los parámetros de movimiento de los nodos de la red Ad-Hoc de tal forma que el objetivo sea un movimiento que permita tener la red transmitiendo la mayor cantidad de datos entre los nodos donde se ve el escenario ideal y es que todos los nodos se vayan en una misma dirección transmitiendo la misma cantidad de datos entre todos los nodos de manera constante.
 ![NS6](/img/ns6.jpg)
 ## 4. Referencias.
 - [Introduction: Reinforcement Learning with OpenAI Gym](https://towardsdatascience.com/reinforcement-learning-with-openai-d445c2c687d2) 
