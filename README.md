@@ -684,9 +684,20 @@ main (int argc, char *argv[])
 ```./modelo_addHoc&OpenGym_1/simple_test.py```
 
 ### Escenario 3:
-2. Para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en su carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./modelo_addHoc&OpenGym_2/linear-mesh-2/simple_test.py.
+3. 
+a. Para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en su carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./modelo_addHoc&OpenGym_2/linear-mesh-2/simple_test.py.
 
 ```./modelo_addHoc&OpenGym_2/simple_test.py```
+b. Para correr el ejemplo con OpenAI Gym ahora con debug de el comportamiento de los nodos se hace siguiendo los mismos parametros anteriores pero ahora desplegando en 2 terminales de la siguiente forma.
+
+# Terminal 1
+./waf --run "linear-mesh-2"
+
+# Terminal 2
+cd ./scratch/linear-mesh-2/
+./simple_test.py --start=0
+
+
 ### Herramientas utilizadas en el desarrollo: 
 
 #### NS3: 
