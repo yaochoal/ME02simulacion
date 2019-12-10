@@ -508,6 +508,7 @@ Este software se encarga principalmente de simular redes de computadores, cuya e
 ![NS5](/img/ns5.jpg)
 6. Ya aplicado a OpenAI Gym la idea es variar los parámetros de movimiento de los nodos de la red Ad-Hoc de tal forma que el objetivo sea un movimiento que permita tener la red transmitiendo la mayor cantidad de datos entre los nodos donde se ve el escenario ideal y es que todos los nodos se vayan en una misma dirección transmitiendo la misma cantidad de datos entre todos los nodos de manera constante.
 ![NS6](/img/ns6.jpg)
+7. Después de aplicar la técnica de aprendizaje en promedio en el paso 10, la red Ad-Hoc empieza a generar un patrón el cual empieza a balancear las distancias entre nodos y su conectividad de tal manera que maximice el área de cobertura sin desconectar nodos de la red.
 ## 4. Referencias.
 - [Introduction: Reinforcement Learning with OpenAI Gym](https://towardsdatascience.com/reinforcement-learning-with-openai-d445c2c687d2) 
 - [ns3-gym: Extending OpenAI Gym for Networking Research](https://arxiv.org/pdf/1810.03943.pdf)
