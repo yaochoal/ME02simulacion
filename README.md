@@ -723,6 +723,8 @@ Este software se encarga principalmente de simular redes de computadores, cuya e
 ![NS6](/img/ns6.jpg)
 7. Después de aplicar la técnica de aprendizaje en promedio en el paso 10, la red Ad-Hoc empieza a generar un patrón el cual empieza a balancear las distancias entre nodos y su conectividad de tal manera que maximice el área de cobertura sin desconectar nodos de la red, sin embargo, este no es capaz de forzar a todos los nodos para que sean parte de una sola red ad-hoc, es decir, no evita la creación de subredes que no tienen forma de conectarse con otras redes.
 ![NS7](/img/ns7.jpg)
+
+| ------------- | 
 | Puntos de prueba| 
 | ------------- | 
 | 57  | 
