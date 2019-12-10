@@ -727,14 +727,7 @@ Este software se encarga principalmente de simular redes de computadores, cuya e
 | ------------- | 
 | 57  | 
 | 86  | 
-| ------------- | 
-| Promedio | 
-| ------------- | 
-|71,4|
-| ------------- | 
-| Desviación estándar | 
-| ------------- | 
-|     18,66     |
+
 8. Ahora, basados en el ejemplo sobre tipología meshnet la cual conecta directamente, de forma dinámica y sin jerarquía a todos los nodos los cuales sea eficiente una conexión, dando como consecuencia la habilidad de auto-configurarse y auto-organizarse. De forma intuitiva se puede evidenciar que el uso de esta tipología a la red ad-hoc y a su vez establecer la técnica de aprendizaje por refuerzo se concluye que la red ad-hoc tiene los suficientes insumos para poder maximizar el área de cobertura y a su vez las conexiones de forma efectiva y eficiente dentro de una única red.
 
 ## 4. Referencias.
