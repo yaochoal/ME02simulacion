@@ -162,7 +162,7 @@ Para definir el submodelo de comunicación se genera un espacio que delimita los
 
 ### 1.2 Código fuente del modelo 1 red ad-hoc con OpenAI Gym:
 
-``` fichero: ./sim.cc```
+``` fichero: ./modelo_addHoc&OpenGym_1/sim.cc```
 
 ```
 #include "ns3/core-module.h"
@@ -422,50 +422,247 @@ La técnica de aprendizaje por refuerzo de define de la siguiente manera, un age
 Ahora, para poder comprender la inserción de inteligencia artificial a través de la herramienta OpenAI Gym se debe descomponer la técnica de aprendizaje por refuerzo en un modelo de tres componentes; el primero, es un componente de observación al cual se le integra el objeto de estudio, en este caso la red ad-hoc incluyendo la parametrización impuesta anteriormente con el fin de poder interactuar con los dos siguientes componentes del modelo de la técnica de aprendizaje por refuerzo; luego, se define el sistema de recompensas, el cual de forma iterativa asigna valores numéricos de un límite inferior a un límite superior, y se da por satisfecho al llegar al límite superior u óptimo de este sistema; y el método de cierre o conclusión de la simulación se activa cuando expira el tiempo de ejecución o se llega al límite superior del sistema de recompensas.
 
 
-### 1.4 Código fuente del modelo 1 red ad-hoc con OpenAI Gym para iniciar simulaciòn:
+### 1.4 Código fuente del modelo 2 red ad-hoc con OpenAI Gym basado en el ejemplo de Linear-Mesh:
 
-``` fichero: ./simple_test.py```
+``` fichero: ./modelo_addHoc&OpenGym_2/linear-mesh-2/sim.cc```
 ```
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+#include "ns3/core-module.h"
+#include "ns3/applications-module.h"
+#include "ns3/opengym-module.h"
+#include "ns3/mobility-module.h"
+#include "ns3/wifi-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/spectrum-module.h"
+#include "ns3/stats-module.h"
+#include "ns3/flow-monitor-module.h"
+#include "ns3/traffic-control-module.h"
+#include "ns3/node-list.h"
 
-import gym
-import argparse
-import ns3gym
+#include "mygym.h"
 
-env = gym.make('ns3-v0')
-env.reset()
+using namespace ns3;
 
-ob_space = env.observation_space
-ac_space = env.action_space
-print("Observation space: ", ob_space,  ob_space.dtype)
-print("Action space: ", ac_space, ac_space.dtype)
+NS_LOG_COMPONENT_DEFINE ("OpenGym");
 
-stepIdx = 0
+int
+main (int argc, char *argv[])
+{
+  // Parameters of the environment
+  uint32_t simSeed = 1;
+  double simulationTime = 10; //seconds
+  double envStepTime = 0.1; //seconds, ns3gym env step time interval
+  uint32_t openGymPort = 5555;
+  uint32_t testArg = 0;
 
-try:
-    obs = env.reset()
-    print("Step: ", stepIdx)
-    print("---obs: ", obs)
+  bool eventBasedEnv = true;
 
-    while True:
-        stepIdx += 1
+  //Parameters of the scenario
+  uint32_t nodeNum = 25;
+  double distance = 10.0;
+  bool noErrors = false;
+  std::string errorModelType = "ns3::NistErrorRateModel";
+  bool enableFading = true;
+  uint32_t pktPerSec = 1000;
+  uint32_t payloadSize = 1500;
+  bool enabledMinstrel = false;
 
-        action = env.action_space.sample()
-        print("---action: ", action)
-        obs, reward, done, info = env.step(action)
+  // define datarates
+  std::vector<std::string> dataRates;
+  dataRates.push_back("OfdmRate1_5MbpsBW5MHz");
+  dataRates.push_back("OfdmRate2_25MbpsBW5MHz");
+  dataRates.push_back("OfdmRate3MbpsBW5MHz");
+  dataRates.push_back("OfdmRate4_5MbpsBW5MHz");
+  dataRates.push_back("OfdmRate6MbpsBW5MHz");
+  dataRates.push_back("OfdmRate9MbpsBW5MHz");
+  dataRates.push_back("OfdmRate12MbpsBW5MHz");
+  dataRates.push_back("OfdmRate13_5MbpsBW5MHz");
+  uint32_t dataRateId = 1;
 
-        print("Step: ", stepIdx)
-        print("---obs, reward, done, info: ", obs, reward, done, info)
 
-        if done:
-            break
+  CommandLine cmd;
+  // required parameters for OpenGym interface
+  cmd.AddValue ("openGymPort", "Port number for OpenGym env. Default: 5555", openGymPort);
+  cmd.AddValue ("simSeed", "Seed for random generator. Default: 1", simSeed);
+  // optional parameters
+  cmd.AddValue ("eventBasedEnv", "Whether steps should be event or time based. Default: true", eventBasedEnv);
+  cmd.AddValue ("simTime", "Simulation time in seconds. Default: 10s", simulationTime);
+  cmd.AddValue ("nodeNum", "Number of nodes. Default: 5", nodeNum);
+  cmd.AddValue ("distance", "Inter node distance. Default: 10m", distance);
+  cmd.AddValue ("testArg", "Extra simulation argument. Default: 0", testArg);
+  cmd.Parse (argc, argv);
 
-except KeyboardInterrupt:
-    print("Ctrl-C -> Exit")
-finally:
-    env.close()
-    print("Done")
+  NS_LOG_UNCOND("Ns3Env parameters:");
+  NS_LOG_UNCOND("--simulationTime: " << simulationTime);
+  NS_LOG_UNCOND("--openGymPort: " << openGymPort);
+  NS_LOG_UNCOND("--envStepTime: " << envStepTime);
+  NS_LOG_UNCOND("--seed: " << simSeed);
+  NS_LOG_UNCOND("--distance: " << distance);
+  NS_LOG_UNCOND("--testArg: " << testArg);
+
+  if (noErrors){
+    errorModelType = "ns3::NoErrorRateModel";
+  }
+
+  RngSeedManager::SetSeed (1);
+  RngSeedManager::SetRun (simSeed);
+
+  // Configuration of the scenario
+  // Create Nodes
+  NodeContainer nodes;
+  nodes.Create (nodeNum);
+
+  // WiFi device
+  WifiHelper wifi;
+  wifi.SetStandard (WIFI_PHY_STANDARD_80211_5MHZ);
+
+  // Channel
+  SpectrumWifiPhyHelper spectrumPhy = SpectrumWifiPhyHelper::Default ();
+  Ptr<MultiModelSpectrumChannel> spectrumChannel = CreateObject<MultiModelSpectrumChannel> ();
+
+  spectrumPhy.SetChannel (spectrumChannel);
+  spectrumPhy.SetErrorRateModel (errorModelType);
+  spectrumPhy.Set ("Frequency", UintegerValue (5200));
+  spectrumPhy.Set ("ChannelWidth", UintegerValue (5));
+  
+  Config::SetDefault ("ns3::WifiPhy::Frequency", UintegerValue (5200));
+  Config::SetDefault ("ns3::WifiPhy::ChannelWidth", UintegerValue (5));
+
+  // Channel
+  Ptr<FriisPropagationLossModel> lossModel = CreateObject<FriisPropagationLossModel> ();
+  Ptr<NakagamiPropagationLossModel> fadingModel = CreateObject<NakagamiPropagationLossModel> ();
+  if (enableFading) {
+    lossModel->SetNext (fadingModel);
+  }
+  spectrumChannel->AddPropagationLossModel (lossModel);
+  Ptr<ConstantSpeedPropagationDelayModel> delayModel = CreateObject<ConstantSpeedPropagationDelayModel> ();
+  spectrumChannel->SetPropagationDelayModel (delayModel);
+
+  // Add MAC and set DataRate
+  WifiMacHelper wifiMac;
+
+  if (enabledMinstrel) {
+    wifi.SetRemoteStationManager ("ns3::MinstrelWifiManager");
+  } else {
+    std::string dataRateStr = dataRates.at(dataRateId);
+    NS_LOG_UNCOND("dataRateStr: " << dataRateStr);
+    wifi.SetRemoteStationManager ("ns3::ConstantRateWifiManager",
+                                  "DataMode", StringValue (dataRateStr),
+                                  "ControlMode", StringValue (dataRateStr));
+  }
+
+  // Set it to adhoc mode
+  wifiMac.SetType ("ns3::AdhocWifiMac",
+                   "QosSupported", BooleanValue (false));
+
+  // Install wifi device
+  NetDeviceContainer devices = wifi.Install (spectrumPhy, wifiMac, nodes);
+
+  // Mobility model
+  MobilityHelper mobility;
+  mobility.SetPositionAllocator ("ns3::GridPositionAllocator",
+                                 "MinX", DoubleValue (0.0),
+                                 "MinY", DoubleValue (0.0),
+                                 "DeltaX", DoubleValue (distance),
+                                 "DeltaY", DoubleValue (distance),
+                                 "GridWidth", UintegerValue (nodeNum),  // will create linear topology
+                                 "LayoutType", StringValue ("RowFirst"));
+  mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
+  mobility.Install (nodes);
+
+  // IP stack and routing
+  InternetStackHelper internet;
+  internet.Install (nodes);
+
+  // Assign IP addresses to devices
+  Ipv4AddressHelper ipv4;
+  NS_LOG_INFO ("Assign IP Addresses");
+  ipv4.SetBase ("10.1.1.0", "255.255.255.0");
+  Ipv4InterfaceContainer interfaces = ipv4.Assign (devices);
+
+  //Configure static multihop routing
+  for (uint32_t i = 0; i < nodes.GetN()-1; i++){
+    Ptr<Node> src = nodes.Get(i);
+    Ptr<Node> nextHop = nodes.Get(i+1);
+    Ptr<Ipv4> destIpv4 = nextHop->GetObject<Ipv4> ();
+    Ipv4InterfaceAddress dest_ipv4_int_addr = destIpv4->GetAddress (1, 0);
+    Ipv4Address dest_ip_addr = dest_ipv4_int_addr.GetLocal ();
+
+    Ptr<Ipv4StaticRouting>  staticRouting = Ipv4RoutingHelper::GetRouting <Ipv4StaticRouting> (src->GetObject<Ipv4> ()->GetRoutingProtocol ());
+    staticRouting->RemoveRoute(1);
+    staticRouting->SetDefaultRoute(dest_ip_addr, 1, 0);
+  }
+
+  // Traffic
+  // Create a BulkSendApplication and install it on node 0
+  Ptr<UniformRandomVariable> startTimeRng = CreateObject<UniformRandomVariable> ();
+  startTimeRng->SetAttribute ("Min", DoubleValue (0.0));
+  startTimeRng->SetAttribute ("Max", DoubleValue (1.0));
+
+  uint16_t port = 1000;
+  uint32_t srcNodeId = 0;
+  uint32_t destNodeId = nodes.GetN() - 1;
+  Ptr<Node> srcNode = nodes.Get(srcNodeId);
+  Ptr<Node> dstNode = nodes.Get(destNodeId);
+
+  Ptr<Ipv4> destIpv4 = dstNode->GetObject<Ipv4> ();
+  Ipv4InterfaceAddress dest_ipv4_int_addr = destIpv4->GetAddress (1, 0);
+  Ipv4Address dest_ip_addr = dest_ipv4_int_addr.GetLocal ();
+
+  InetSocketAddress destAddress (dest_ip_addr, port);
+  destAddress.SetTos (0x70); //AC_BE
+  UdpClientHelper source (destAddress);
+  source.SetAttribute ("MaxPackets", UintegerValue (pktPerSec * simulationTime));
+  source.SetAttribute ("PacketSize", UintegerValue (payloadSize));
+  Time interPacketInterval = Seconds (1.0/pktPerSec);
+  source.SetAttribute ("Interval", TimeValue (interPacketInterval)); //packets/s
+
+  ApplicationContainer sourceApps = source.Install (srcNode);
+  sourceApps.Start (Seconds (0.0));
+  sourceApps.Stop (Seconds (simulationTime));
+
+  // Create a packet sink to receive these packets
+  UdpServerHelper sink (port);
+  ApplicationContainer sinkApps = sink.Install (dstNode);
+  sinkApps.Start (Seconds (0.0));
+  sinkApps.Stop (Seconds (simulationTime));
+
+  // Print node positions
+  NS_LOG_UNCOND ("Node Positions:");
+  for (uint32_t i = 0; i < nodes.GetN(); i++)
+  {
+    Ptr<Node> node = nodes.Get(i);
+    Ptr<MobilityModel> mobility = node->GetObject<MobilityModel> ();
+    NS_LOG_UNCOND ("---Node ID: " << node->GetId() << " Positions: " << mobility->GetPosition());
+  }
+
+  // OpenGym Env
+  Ptr<OpenGymInterface> openGymInterface = CreateObject<OpenGymInterface> (openGymPort);
+  Ptr<MyGymEnv> myGymEnv;
+  if (eventBasedEnv)
+  {
+    myGymEnv = CreateObject<MyGymEnv> ();
+  } else {
+    myGymEnv = CreateObject<MyGymEnv> (Seconds(envStepTime));
+  }
+  myGymEnv->SetOpenGymInterface(openGymInterface);
+
+  // connect OpenGym entity to event source
+  Ptr<UdpServer> udpServer = DynamicCast<UdpServer>(sinkApps.Get(0));
+  if (eventBasedEnv)
+  {
+    udpServer->TraceConnectWithoutContext ("Rx", MakeBoundCallback (&MyGymEnv::NotifyPktRxEvent, myGymEnv, dstNode));
+  } else {
+    udpServer->TraceConnectWithoutContext ("Rx", MakeBoundCallback (&MyGymEnv::CountRxPkts, myGymEnv, dstNode));
+  }
+
+  NS_LOG_UNCOND ("Simulation start");
+  Simulator::Stop (Seconds (simulationTime));
+  Simulator::Run ();
+  NS_LOG_UNCOND ("Simulation stop");
+
+  myGymEnv->NotifySimulationEnd();
+  Simulator::Destroy ();
+}
 ```
 
 
@@ -482,12 +679,12 @@ finally:
 
 ```./waf --run scratch/modelo_AddHoc_OnlyNs3/red-ad-hoc --vis```
 ### Escenario 2:
-2. Y para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en una carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./simple_test.py.
+2. Para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en su carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./modelo_addHoc&OpenGym_1/simple_test.py.
 
 ```./modelo_addHoc&OpenGym_1/simple_test.py```
 
 ### Escenario 3:
-2. Y para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en una carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./simple_test.py.
+2. Para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en su carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./modelo_addHoc&OpenGym_2/linear-mesh-2/simple_test.py.
 
 ```./modelo_addHoc&OpenGym_2/simple_test.py```
 ### Herramientas utilizadas en el desarrollo: 
