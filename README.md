@@ -15,10 +15,10 @@ definiendo dos métricas de aprendizaje para la simulación creada.
 
 ## Entregables
 
-### 1. Código fuente del simulador 1 red ad-hoc sin OpenAI Gym:
+### 1. Código fuente del modelo 1 red ad-hoc sin OpenAI Gym:
 
 
-``` fichero: ./red-ad-hoc.cc```
+``` fichero: ./modelo_AddHoc_OnlyNs3/red-ad-hoc.cc```
 ```
 #include "ns3/core-module.h"
 #include "ns3/applications-module.h"
@@ -155,13 +155,12 @@ main (int argc, char *argv[])
 ```
 ### 1.1 Descripción del codigo: 
 
-Para comprender la simulación como un todo, primero se debe explicar cómo funciona la red ad-hoc a tratar, esta se compone de una serie de rutinas que descomponen la funcionalidad en dos submodelos, uno de comunicación y el otro de movilidad de los nodos o terminales que intercambian información, los cuales siguen una parametrización en cantidad de nodos a trabajar, tamaño, tipo y tasa de transmisión de paquetes. 
+Inicialmente se creo el primer modelo de red Ad Hoc sin incluir OpenAI Gym para comprender la simulación como un todo, primero se debe explicar cómo funciona la red ad-hoc a tratar, esta se compone de una serie de rutinas que descomponen la funcionalidad en dos submodelos, uno de comunicación y el otro de movilidad de los nodos o terminales que intercambian información, los cuales siguen una parametrización en cantidad de nodos a trabajar, tamaño, tipo y tasa de transmisión de paquetes. 
 
 Para definir el submodelo de comunicación se genera un espacio que delimita los nodos, luego crea la cantidad de nodos parametrizados, a estos nodos se le impone el uso de red wifi y se otorgan características a cada uno de los nodos tales como dirección MAC, tipo de red y canal a usar. Más tarde, se implementa el protocolo de internet (IPv4) en cada dispositivo, y finalmente se le asigna una dirección IPv4. Como toda red ad-hoc requiere un componente de movilidad, se integra un submodelo que lo contemple, en este caso, se aplica un modelo de movilidad en 2D delimitando una región frontera; y asignando variables de velocidad y posición (en el eje X y Y) en cada uno de los nodos con el fin de observar recorridos. 
 
-Finalmente, al tener los dos submodelos que satisfacen el estudio de una red ad-hoc, se corre la simulación y se despliega en un componente de visualización.
 
-### 1.2 Código fuente del simulador 2 red ad-hoc con OpenAI Gym:
+### 1.2 Código fuente del modelo 1 red ad-hoc con OpenAI Gym:
 
 ``` fichero: ./sim.cc```
 
@@ -423,7 +422,7 @@ La técnica de aprendizaje por refuerzo de define de la siguiente manera, un age
 Ahora, para poder comprender la inserción de inteligencia artificial a través de la herramienta OpenAI Gym se debe descomponer la técnica de aprendizaje por refuerzo en un modelo de tres componentes; el primero, es un componente de observación al cual se le integra el objeto de estudio, en este caso la red ad-hoc incluyendo la parametrización impuesta anteriormente con el fin de poder interactuar con los dos siguientes componentes del modelo de la técnica de aprendizaje por refuerzo; luego, se define el sistema de recompensas, el cual de forma iterativa asigna valores numéricos de un límite inferior a un límite superior, y se da por satisfecho al llegar al límite superior u óptimo de este sistema; y el método de cierre o conclusión de la simulación se activa cuando expira el tiempo de ejecución o se llega al límite superior del sistema de recompensas.
 
 
-### 1.4 Código fuente del simulador 2 red ad-hoc con OpenAI Gym para iniciar simulaciòn:
+### 1.4 Código fuente del modelo 1 red ad-hoc con OpenAI Gym para iniciar simulaciòn:
 
 ``` fichero: ./simple_test.py```
 ```
@@ -477,14 +476,20 @@ finally:
 - Ubuntu 19.10
 - NS3
 - OpenAI Gym
+
 ### Escenario 1:
 1. Para correr el ejemplo simple de NS3 se hace con el siguiente comando con el archivo dentro de la carpeta scratch parados en la terminal desde la raiz de el programa de NS3
 
-```./waf --run scratch/red-ad-hoc --vis```
+```./waf --run scratch/modelo_AddHoc_OnlyNs3/red-ad-hoc --vis```
 ### Escenario 2:
 2. Y para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en una carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./simple_test.py.
 
-```./simple_test.py```
+```./modelo_addHoc&OpenGym_1/simple_test.py```
+
+### Escenario 3:
+2. Y para correr el ejemplo con OpenAI Gym se hace con el siguiente comando donde se debe tener el archivo simple_test.py y sim.cc en una carpeta aislada y sin otros ficheros dentro dentro de la carpeta scratch y parados en la terminal desde donde esta el archivo ./simple_test.py.
+
+```./modelo_addHoc&OpenGym_2/simple_test.py```
 ### Herramientas utilizadas en el desarrollo: 
 
 #### NS3: 
