@@ -447,7 +447,7 @@ NS_LOG_COMPONENT_DEFINE ("OpenGym");
 int
 main (int argc, char *argv[])
 {
-  // Parameters of the environment
+  // Parámetros del entorno
   uint32_t simSeed = 1;
   double simulationTime = 10; //seconds
   double envStepTime = 0.1; //seconds, ns3gym env step time interval
@@ -456,7 +456,7 @@ main (int argc, char *argv[])
 
   bool eventBasedEnv = true;
 
-  //Parameters of the scenario
+  //Parámetros del escenario
   uint32_t nodeNum = 25;
   double distance = 10.0;
   bool noErrors = false;
@@ -466,7 +466,7 @@ main (int argc, char *argv[])
   uint32_t payloadSize = 1500;
   bool enabledMinstrel = false;
 
-  // define datarates
+  // definimos tasas de datos
   std::vector<std::string> dataRates;
   dataRates.push_back("OfdmRate1_5MbpsBW5MHz");
   dataRates.push_back("OfdmRate2_25MbpsBW5MHz");
@@ -483,7 +483,7 @@ main (int argc, char *argv[])
   // required parameters for OpenGym interface
   cmd.AddValue ("openGymPort", "Port number for OpenGym env. Default: 5555", openGymPort);
   cmd.AddValue ("simSeed", "Seed for random generator. Default: 1", simSeed);
-  // optional parameters
+  // parametros opcionales
   cmd.AddValue ("eventBasedEnv", "Whether steps should be event or time based. Default: true", eventBasedEnv);
   cmd.AddValue ("simTime", "Simulation time in seconds. Default: 10s", simulationTime);
   cmd.AddValue ("nodeNum", "Number of nodes. Default: 5", nodeNum);
@@ -506,8 +506,8 @@ main (int argc, char *argv[])
   RngSeedManager::SetSeed (1);
   RngSeedManager::SetRun (simSeed);
 
-  // Configuration of the scenario
-  // Create Nodes
+  // Configuración del escenario
+  // Creacion de nodos
   NodeContainer nodes;
   nodes.Create (nodeNum);
 
@@ -537,7 +537,7 @@ main (int argc, char *argv[])
   Ptr<ConstantSpeedPropagationDelayModel> delayModel = CreateObject<ConstantSpeedPropagationDelayModel> ();
   spectrumChannel->SetPropagationDelayModel (delayModel);
 
-  // Add MAC and set DataRate
+  // añadir MAC y dataRates
   WifiMacHelper wifiMac;
 
   if (enabledMinstrel) {
@@ -550,14 +550,14 @@ main (int argc, char *argv[])
                                   "ControlMode", StringValue (dataRateStr));
   }
 
-  // Set it to adhoc mode
+  // Ponemos el modo ad hoc
   wifiMac.SetType ("ns3::AdhocWifiMac",
                    "QosSupported", BooleanValue (false));
 
-  // Install wifi device
+  // Instalación wifi device
   NetDeviceContainer devices = wifi.Install (spectrumPhy, wifiMac, nodes);
 
-  // Mobility model
+  // Modelo de movilidad
   MobilityHelper mobility;
   mobility.SetPositionAllocator ("ns3::GridPositionAllocator",
                                  "MinX", DoubleValue (0.0),
@@ -569,17 +569,17 @@ main (int argc, char *argv[])
   mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
   mobility.Install (nodes);
 
-  // IP stack and routing
+  // IP apilar y enrutar
   InternetStackHelper internet;
   internet.Install (nodes);
 
-  // Assign IP addresses to devices
+  // Asignacion de direcciones IP  a los dispositivos
   Ipv4AddressHelper ipv4;
   NS_LOG_INFO ("Assign IP Addresses");
   ipv4.SetBase ("10.1.1.0", "255.255.255.0");
   Ipv4InterfaceContainer interfaces = ipv4.Assign (devices);
 
-  //Configure static multihop routing
+  //Configurar el enrutamiento estático de múltiples saltos
   for (uint32_t i = 0; i < nodes.GetN()-1; i++){
     Ptr<Node> src = nodes.Get(i);
     Ptr<Node> nextHop = nodes.Get(i+1);
@@ -592,7 +592,7 @@ main (int argc, char *argv[])
     staticRouting->SetDefaultRoute(dest_ip_addr, 1, 0);
   }
 
-  // Traffic
+  // Trafico
   // Create a BulkSendApplication and install it on node 0
   Ptr<UniformRandomVariable> startTimeRng = CreateObject<UniformRandomVariable> ();
   startTimeRng->SetAttribute ("Min", DoubleValue (0.0));
@@ -620,13 +620,13 @@ main (int argc, char *argv[])
   sourceApps.Start (Seconds (0.0));
   sourceApps.Stop (Seconds (simulationTime));
 
-  // Create a packet sink to receive these packets
+  // Cree un receptor de paquetes para recibir estos paquetes
   UdpServerHelper sink (port);
   ApplicationContainer sinkApps = sink.Install (dstNode);
   sinkApps.Start (Seconds (0.0));
   sinkApps.Stop (Seconds (simulationTime));
 
-  // Print node positions
+  // Imprimir posiciones de nodo
   NS_LOG_UNCOND ("Node Positions:");
   for (uint32_t i = 0; i < nodes.GetN(); i++)
   {
